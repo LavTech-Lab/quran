@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan Quran Reading Plan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        #reading-plan {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        .plan-item {
+            background-color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .complete {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ramadan Quran Reading Plan</h1>
+    <div id="reading-plan"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startDate = new Date('2025-03-01');
+            const endDate = new Date('2025-03-30');
+            const quranPortions = generateQuranPortions(30); // Assuming the Quran is divided into 30 portions
+            const readingPlanDiv = document.getElementById('reading-plan');
+
+            for (let i = 0; i < 30; i++) {
+                const planItem = document.createElement('div');
+                planItem.className = 'plan-item';
+                const date = new Date(startDate);
+                date.setDate(startDate.getDate() + i);
+
+                planItem.innerHTML = `
+                    <span>${date.toDateString()}: ${quranPortions[i]}</span>
+                    <button onclick="markAsRead(${i})">Mark as Read</button>
+                `;
+                readingPlanDiv.appendChild(planItem);
+            }
+
+            function markAsRead(index) {
+                const planItem = document.querySelectorAll('.plan-item')[index];
+                planItem.classList.add('complete');
+                alert('Portion marked as read!');
+            }
+
+            function generateQuranPortions(days) {
+                const portions = [];
+                for (let i = 1; i <= days; i++) {
+                    portions.push(`Portion ${i}`);
+                }
+                return portions;
+            }
+
+            setInterval(() => {
+                const now = new Date();
+                if (now >= startDate && now <= endDate) {
+                    alert('Reminder: Have you read your daily Quran portion?');
+                }
+            }, 24 * 60 * 60 * 1000); // Reminder every 24 hours
+        });
+    </script>
+</body>
+</html>
